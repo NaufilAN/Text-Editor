@@ -19,7 +19,17 @@ def saveAs():
     file.write(t)
     file.close()
 
+def openFile():
+
+    file = tkinter.filedialog.askopenfile(mode="r")
+    t = file.read()
+
+    text.delete(0.0, END)
+    text.insert(0.0, t)
+
 saveAsButton = Button(root, text="Save As", command=saveAs)
 saveAsButton.grid()
+openButton = Button(root, text="Open", command=openFile)
+openButton.grid()
 
 root.mainloop() 
