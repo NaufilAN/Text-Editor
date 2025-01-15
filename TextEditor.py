@@ -1,12 +1,19 @@
 from tkinter import *
 import tkinter.filedialog
-import tkinter.simpledialog
 
 root = Tk()
 root.title("Naufil's Text Editor")
 
 text = Text(root)
 text.grid()
+
+filename = None
+
+def newFile():
+
+    global filename
+    filename = "Untitled"
+    text.delete(0.0, END)
 
 def saveAs():
 
@@ -27,8 +34,12 @@ def openFile():
     text.delete(0.0, END)
     text.insert(0.0, t)
 
+newFileButton = Button(root, text="New", command=newFile)
+newFileButton.grid()
+
 saveAsButton = Button(root, text="Save As", command=saveAs)
 saveAsButton.grid()
+
 openButton = Button(root, text="Open", command=openFile)
 openButton.grid()
 
