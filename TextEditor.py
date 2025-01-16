@@ -4,9 +4,6 @@ import tkinter.filedialog
 root = Tk()
 root.title("Naufil's Text Editor")
 
-text = Text(root)
-text.grid()
-
 filename = None
 
 def newFile():
@@ -22,25 +19,36 @@ def saveAs():
 
     location = tkinter.filedialog.asksaveasfilename(defaultextension=".txt")
 
+    if not location: return # no file given, return
+    
     file = open(location, mode="w+")
     file.write(t)
     file.close()
 
 def openFile():
-
     file = tkinter.filedialog.askopenfile(mode="r")
-    t = file.read()
 
+    if not file: return # no file given, return
+
+    t = file.read()
     text.delete(0.0, END)
     text.insert(0.0, t)
 
-newFileButton = Button(root, text="New", command=newFile)
-newFileButton.grid()
+buttonFrame = Frame(root) # frame for all key buttons
+buttonFrame.grid(row=0, column=0, sticky=W) # stay on top of page
 
-saveAsButton = Button(root, text="Save As", command=saveAs)
-saveAsButton.grid()
+newFileButton = Button(buttonFrame, text="New", command=newFile)
+newFileButton.grid(row=0, column=0)
 
-openButton = Button(root, text="Open", command=openFile)
-openButton.grid()
+saveAsButton = Button(buttonFrame, text="Save As", command=saveAs)
+saveAsButton.grid(row=0, column=1)
+
+openButton = Button(buttonFrame, text="Open", command=openFile)
+openButton.grid(row=0, column=2)
+
+text = Text(root) # create a textfield
+Grid.columnconfigure(root, 0, weight=1) #configure columns to allow resize
+Grid.rowconfigure(root, 1, weight=1) #configure rows to allow resize
+text.grid(sticky='NSEW') # stick to north east
 
 root.mainloop() 
